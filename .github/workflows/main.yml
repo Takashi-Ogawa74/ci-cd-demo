@@ -1,0 +1,21 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main  # main ブランチへの push をトリガーにする
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # ビルド環境として Ubuntu を使用
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # リポジトリのコードをチェックアウト
+
+      - name: Deploy to Vercel
+        run: |
+          curl -fsSL https://vercel.com/download | bash  # Vercel CLI をインストール
+          vercel --prod  # Vercel にデプロイ
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Vercel のトークンを GitHub Secrets に設定
